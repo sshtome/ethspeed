@@ -2,6 +2,8 @@
 
 EthSpeed — простой self-hosted speed test: один Go-бинарник поднимает HTTP-сервер для измерения download/upload скорости и отдаёт веб-интерфейс, вшитый в бинарник через `go:embed`.
 
+В таком виде проект позволяет измерять скорость **до развернутого сервера**: для замера нужно либо подключиться тем же бинарником в режиме клиента и протестировать свой сервер, либо использовать публичный сервер по умолчанию (например `speed.cloudflare.com`), если свой сервер не поднят.
+
 ## Возможности
 
 - Web UI: запуск теста, отображение Download/Upload, кнопка Start/Stop.
@@ -21,10 +23,8 @@ EthSpeed — простой self-hosted speed test: один Go-бинарник
 
 ### Локально
 
-```bash
 go build -o ethspeed .
 ./ethspeed -mode server -host 0.0.0.0 -port 8080
-```
 
 Открыть UI:
 - http://localhost:8080/
@@ -34,21 +34,25 @@ go build -o ethspeed .
 
 ### Docker
 
-```bash
 docker build -t ethspeed:latest .
 docker run --rm -p 8080:8080 ethspeed:latest
-```
 
 ## Запуск (клиент)
 
+### Тест до своего сервера
+
 Пример: 100 MB, 3 прогона, download+upload:
 
-```bash
 ./ethspeed -mode client -server 127.0.0.1:8080 -size 100 -count 3 -direction both
-```
+
+### Тест до публичного сервера (если свой не поднят)
+
+По умолчанию в коде сервер задан как `speed.cloudflare.com`, то есть можно не указывать `-server`:
+
+./ethspeed -mode client -size 100 -count 3 -direction both
 
 Параметры:
-- `-server` — `host:port`
+- `-server` — `host:port` (если не задан, используется значение по умолчанию)
 - `-size` — размер в MB
 - `-count` — количество прогонов
 - `-direction` — `down`, `up`, или `both`
@@ -64,15 +68,13 @@ docker run --rm -p 8080:8080 ethspeed:latest
 
 ## Структура проекта
 
-```
 .
-├── main.go           # основной код
-├── go.mod            # модуль
-├── go.sum            # зависимости
-├── Dockerfile        # сборка в контейнер
-└── http/             # статические файлы (UI)
-    └── index.html    # веб-интерфейс
-```
+├── main.go # основной код
+├── go.mod # модуль
+├── go.sum # зависимости
+├── Dockerfile # сборка в контейнер
+└── http/ # статические файлы (UI)
+└── index.html # веб-интерфейс
 
 ## Разработка
 
