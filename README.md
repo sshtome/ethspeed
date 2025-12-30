@@ -69,12 +69,15 @@ docker run --rm -p 8080:8080 ethspeed:latest
 ## Структура проекта
 
 .
-├── main.go           # основной код
-├── go.mod            # модуль
-├── go.sum            # зависимости
-├── Dockerfile        # сборка в контейнер
-└── http/             # статические файлы (UI)
-    └── index.html    # веб-интерфейс
+├── main.go # основной код
+├── go.mod # модуль
+├── go.sum # зависимости
+├── Dockerfile # сборка в контейнер
+├── docker-compose.yaml # docker-compose конфигурация
+├── LICENSE # лицензия MIT
+├── README.md # этот файл
+└── http/ # статические файлы (UI)
+└── index.html # веб-интерфейс
 
 
 ## Разработка
