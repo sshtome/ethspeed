@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  ethspeed:
+    image: ethspeed:latest
+    container_name: ethspeed
+    restart: unless-stopped
+    environment:
+      HOST: 0.0.0.0
+      PORT: 8080
+    ports:
+      - "8080:8080"
+
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8080/health | grep -q '\"ok\":true'"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 5s
