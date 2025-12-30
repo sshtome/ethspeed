@@ -66,20 +66,6 @@ docker run --rm -p 8080:8080 ethspeed:latest
 - `GET /health` — healthcheck
 - `GET /ethspeed` — скачать запущенный бинарник
 
-## Структура проекта
-
-.
-├── main.go # основной код
-├── go.mod # модуль
-├── go.sum # зависимости
-├── Dockerfile # сборка в контейнер
-├── docker-compose.yaml # docker-compose конфигурация
-├── LICENSE # лицензия MIT
-├── README.md # этот файл
-└── http/ # статические файлы (UI)
-└── index.html # веб-интерфейс
-
-
 ## Разработка
 
 Статика встраивается в бинарник через `go:embed`, поэтому итоговый бинарник содержит всё необходимое для запуска.
